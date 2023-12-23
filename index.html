@@ -1,0 +1,710 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>RevoMann - Engineering</title>
+    <link rel="icon" href="favicon.ico">
+    <link href="style.css" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+
+
+</head>
+
+<body
+    x-data="{ page: 'home', 'loaded': true, 'modalNewsletter': false, 'modalSearch': false, 'stickyMenu': false, 'navigationOpen': false, 'scrollTop': false }">
+    <div x-show="loaded"
+        x-init="window.addEventListener('DOMContentLoaded', () => {setTimeout(() => loaded = false, 500)})"
+        class="fixed left-0 top-0 z-999999 flex h-screen w-screen items-center justify-center bg-white">
+        <div class="h-16 w-16 animate-spin rounded-full border-4 border-solid border-primary border-t-transparent">
+        </div>
+    </div>
+    <header class="fixed left-0 top-0 w-full z-9999 bg-white py-7 lg:py-0 transition-all ease-in-out duration-300"
+        :class="{ 'shadow !py-4 lg:!py-0' : stickyMenu }"
+        @scroll.window="stickyMenu = (window.scrollY > 0) ? true : false">
+        <div class="max-w-[1170px] mx-auto px-4 sm:px-8 xl:px-0 lg:flex items-center justify-between relative">
+            <div class="w-full lg:w-3/12 flex items-center justify-between">
+                <a href="index.html">
+                    <img src="images/logo.svg" alt="Logo" class="h-full w-16" />
+                </a>
+                <button id="menuToggler" aria-label="button for menu toggle" class="lg:hidden block"
+                    @click="navigationOpen = !navigationOpen">
+                    <span class="block relative cursor-pointer w-5.5 h-5.5">
+                        <span class="du-block absolute right-0 w-full h-full">
+                            <span
+                                class="block relative top-0 left-0 bg-dark rounded-sm w-0 h-0.5 my-1 ease-in-out duration-200 delay-[0]"
+                                :class="{ '!w-full delay-300': !navigationOpen }"></span>
+                            <span
+                                class="block relative top-0 left-0 bg-dark rounded-sm w-0 h-0.5 my-1 ease-in-out duration-200 delay-150"
+                                :class="{ '!w-full delay-400': !navigationOpen }"></span>
+                            <span
+                                class="block relative top-0 left-0 bg-dark rounded-sm w-0 h-0.5 my-1 ease-in-out duration-200 delay-200"
+                                :class="{ '!w-full delay-500': !navigationOpen }"></span>
+                        </span>
+                        <span class="du-block absolute right-0 w-full h-full rotate-45">
+                            <span
+                                class="block bg-dark rounded-sm ease-in-out duration-200 delay-300 absolute left-2.5 top-0 w-0.5 h-full"
+                                :class="{ '!h-0 delay-[0]': !navigationOpen }"></span>
+                            <span
+                                class="block bg-dark rounded-sm ease-in-out duration-200 delay-400 absolute left-0 top-2.5 w-full h-0.5"
+                                :class="{ '!h-0 dealy-200': !navigationOpen }"></span>
+                        </span>
+                    </span>
+                </button>
+
+            </div>
+            <div class="w-full lg:w-9/12 h-0 lg:h-auto invisible lg:visible lg:flex items-center justify-between"
+                :class="{ '!visible bg-white shadow-lgrelative !h-auto max-h-[400px] overflow-y-scroll rounded-md mt-4 p-7.5': navigationOpen }">
+                <nav>
+                    <ul class="flex lg:items-center flex-col lg:flex-row gap-5 lg:gap-10">
+                        <li class="group relative lg:py-6.5" :class="{ 'lg:!py-4' : stickyMenu }"
+                            x-data="{ dropdown: false }">
+                            <a href="index.html#" class="hover:text-dark flex items-center justify-between gap-3"
+                                @click.prevent="dropdown = !dropdown"
+                                :class="{ '!text-dark': page === 'personal-blog' || page === 'home' }">
+                                Home
+                            </a>
+                        </li>
+                        <li class="group relative lg:py-6.5" :class="{ 'lg:!py-4' : stickyMenu }"
+                            x-data="{ dropdown: false }">
+                            <a href="index.html#" class="hover:text-dark flex items-center justify-between gap-3"
+                                @click.prevent="dropdown = !dropdown"
+                                :class="{ '!text-dark': page === 'category' || page === 'about' || page === 'author' || page === 'search' || page === 'privacy-policy' || page === 'style-guide' || page === 'signin' || page === 'signup' || page === '404' }">
+                                About
+                            </a>
+                        </li>
+                        <li class="group relative lg:py-6.5" :class="{ 'lg:!py-4' : stickyMenu }"
+                            x-data="{ dropdown: false }">
+                            <a href="index.html#" class="hover:text-dark flex items-center justify-between gap-3"
+                                @click.prevent="dropdown = !dropdown"
+                                :class="{ '!text-dark': page === 'blog-single' || page === 'blog-single-2' || page === 'blog-single-3' || page === 'archive' }">
+                                Contact
+                            </a>
+                        </li>
+                        <li class="nav__menu lg:py-6.5" :class="{ 'lg:!py-4' : stickyMenu }">
+                            <a href="signin.html" class="hover:text-dark">Gallery</a>
+                        </li>
+                    </ul>
+                </nav>
+                <div class="flex flex-wrap items-center gap-8.5 mt-7 lg:mt-0">
+                    <div class="flex items-center gap-1.5">
+                        <a id="linkedinBtn" aria-label="linkedin social link" href="index.html#"
+                            class="flex items-center justify-center w-7.5 h-7.5 rounded-full hover:bg-gray-2 lg:transition-all lg:duration-200 hover:text-dark">
+                            <svg class="fill-current" width="19" height="18" viewBox="0 0 19 18" fill="none"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path
+                                    d="M5.50004 3.50068C5.49976 4.11141 5.12924 4.661 4.56318 4.89028C3.99713 5.11957 3.34858 4.98277 2.92335 4.54439C2.49812 4.10601 2.38114 3.45359 2.62755 2.89478C2.87397 2.33597 3.43458 1.98236 4.04504 2.00068C4.85584 2.02502 5.5004 2.68951 5.50004 3.50068ZM5.54504 6.11068H2.54504V15.5007H5.54504V6.11068ZM10.2851 6.11068H7.30004V15.5007H10.2551V10.5732C10.2551 7.82816 13.8326 7.57316 13.8326 10.5732V15.5007H16.7951V9.55316C16.7951 4.92568 11.5001 5.09818 10.2551 7.37066L10.2851 6.11068Z"
+                                    fill />
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main>
+
+        <section id="home" class="rounded-b-[50px] relative overflow-hidden z-10 pb-15 pt-34">
+            <div>
+                <div class="absolute bottom-0 left-0 rounded-b-[50px] w-full h-full bg-gray"></div>
+                <div class="hidden lg:block absolute bottom-0 left-0 rounded-b-[50px] w-full h-full">
+                    <img src="images/hero-bg.svg" alt="hero" />
+                </div>
+            </div>
+
+            <div class="rounded-[20px] relative overflow-hidden z-10">
+                <div>
+                    <div class="absolute bottom-0 left-0 rounded-[20px] w-full h-full bg-gray"></div>
+                    <div class="absolute bottom-0 left-0 rounded-[20px] w-full h-full">
+                        <img class="absolute bottom-0" src="images/hero-bg-02.svg" alt="hero">
+                    </div>
+                </div>
+
+                <div class="max-w-[880px] mx-auto px-4 sm:px-8 lg:px-0 py-7.5 sm:py-10 lg:py-15 relative z-1">
+                    <div class="flex flex-col sm:flex-row items-center gap-7.5 lg:gap-15">
+                        <div
+                            class="max-w-[277px] w-full h-[277px] rounded-full flex items-center justify-center border border-gray-3">
+                            <div class="max-w-[165px] w-full h-[165px] shadow-img rounded-full overflow-hidden">
+                                <img src="images/hero-01.png" alt="user">
+                            </div>
+                        </div>
+                        <div class="max-w-[593px] w-full ">
+                            <h1 class="text-2xl sm:text-4xl lg:text-heading-3 xl:text-heading-2 text-dark mb-3.5">
+                                <span class="font-bold"> RevoMann</span>
+                            </h1>
+                            <div class="space-y-4">
+                                <p>Automation and development of IT solutions for both civil engineering and general
+                                    applications</p>
+                                <p>Structural analysis, design of specific and industrial structures</p>
+                                <p>Research and coordination of projects in collaboration with our
+                                    partners from practice and academia</p>
+                                <p>
+                                    Our philosophy: solution oriented, thinking out of the box and ahead,
+                                    easy to understand and use
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section
+            class="rounded-b-[50px] relative overflow-hidden z-10 pb-15 pt-34 max-w-[1170px] mx-auto px-4 sm:px-8 xl:px-0">
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-y-11 gap-x-7.5">
+
+                <div class="group">
+                    <h3>
+                        <a href="" class="block text-dark font-bold text-xl mb-3.5">
+                            <span class="flex ">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                    strokeWidth={1.5} stroke="#0c3f6cff" class="w-8 h-8 mr-2">
+                                    <path strokeLinecap="round" strokeLinejoin="round"
+                                        d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                </svg>
+                                Structural Design
+                            </span>
+                        </a>
+                    </h3>
+                    <p>
+                        Structural design of specific and
+                        industrial structures.
+                    </p>
+                    <div class="mt-6 overflow-hidden rounded-[10px] transition-all group-hover:scale-105">
+                        <a href="blog-single.html">
+                            <img src="Final Photos/Home/Industrial and specific.png" alt="image" class="w-full">
+                        </a>
+                    </div>
+                </div>
+                <div class="group">
+                    <h3>
+                        <a href="" class="block text-dark font-bold text-xl mb-3.5">
+                            <span class="flex ">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                    strokeWidth={1.5} stroke="#0c3f6cff" class="w-8 h-8 mr-2">
+                                    <path strokeLinecap="round" strokeLinejoin="round"
+                                        d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                </svg>
+                                Fire Design
+                            </span>
+                        </a>
+                    </h3>
+                    <p>
+                        Fire safety, fire design and <br> materials test.
+                    </p>
+                    <div class="mt-6 overflow-hidden rounded-[10px] transition-all group-hover:scale-105">
+                        <a href="blog-single.html">
+                            <img src="Final Photos/Home/Home_Fire.png" alt="image" class="w-full">
+                        </a>
+                    </div>
+                </div>
+
+                <div class="group">
+                    <h3>
+                        <a href="" class="block text-dark font-bold text-xl mb-3.5">
+                            <span class="flex ">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                    strokeWidth={1.5} stroke="#0c3f6cff" class="w-8 h-8 mr-2">
+                                    <path strokeLinecap="round" strokeLinejoin="round"
+                                        d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                </svg>
+                                Automation and IT
+                            </span>
+                        </a>
+                    </h3>
+                    <p>
+                        Automation and IT solutions for <br>
+                        civil engineering.
+                    </p>
+                    <div class="mt-6 overflow-hidden rounded-[10px] transition-all group-hover:scale-105">
+                        <a href="blog-single.html">
+                            <img src="Final Photos/Home/Home_Automation-Structures.png" alt="image" class="w-full">
+                        </a>
+                    </div>
+                </div>
+
+                <div class="group">
+                    <h3>
+                        <a href="" class="block text-dark font-bold text-xl mb-3.5">
+                            <span class="flex ">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                    strokeWidth={1.5} stroke="#0c3f6cff" class="w-8 h-8 mr-2">
+                                    <path strokeLinecap="round" strokeLinejoin="round"
+                                        d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                </svg>
+                                Custom Solutions
+                            </span>
+                        </a>
+                    </h3>
+                    <p>
+                        Specific topics <br> in structural engineering.
+                    </p>
+                    <div class="mt-6 overflow-hidden rounded-[10px] transition-all group-hover:scale-105">
+                        <a href="blog-single.html">
+                            <img src="Final Photos/Home/Home_Specific-FINAL.png" alt="image" class="w-full">
+                        </a>
+                    </div>
+                </div>
+
+                <div class="group">
+                    <h3>
+                        <a href="" class="block text-dark font-bold text-xl mb-3.5">
+                            <span class="flex ">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                    strokeWidth={1.5} stroke="#0c3f6cff" class="w-8 h-8 mr-2">
+                                    <path strokeLinecap="round" strokeLinejoin="round"
+                                        d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                </svg>
+                                Research
+                            </span>
+                        </a>
+                    </h3>
+                    <p>
+                        Structural behavior and <br> material tests.
+                    </p>
+                    <div class="mt-6 overflow-hidden rounded-[10px] transition-all group-hover:scale-105">
+                        <a href="blog-single.html">
+                            <img src="Final Photos/Home/Home_Research-E.png" alt="image" class="w-full">
+                        </a>
+                    </div>
+                </div>
+
+                <div class="group">
+                    <h3>
+                        <a href="" class="block text-dark font-bold text-xl mb-3.5">
+                            <span class="flex ">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                    strokeWidth={1.5} stroke="#0c3f6cff" class="w-8 h-8 mr-2">
+                                    <path strokeLinecap="round" strokeLinejoin="round"
+                                        d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                </svg>
+                                Tailored IT Solutions
+                            </span>
+                        </a>
+                    </h3>
+                    <p>
+                        Solutions customized for operations and <br> businesses.
+                    </p>
+                    <div class="mt-6 overflow-hidden rounded-[10px] transition-all group-hover:scale-105">
+                        <a href="blog-single.html">
+                            <img src="Final Photos/Home/custom-IT.jpeg" alt="image" class="w-full">
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- structural -->
+        <section>
+            <div class="mx-auto max-w-[1170px] px-4 sm:px-8 xl:px-0 relative z-1">
+                <div class="flex flex-wrap gap-x-7.5 gap-y-9">
+                    <div
+                        class="max-w-[1170px] w-full flex flex-col lg:flex-row lg:items-center gap-7.5 lg:gap-11 bg-white shadow-1 rounded-xl p-4 lg:p-2.5">
+                        <div class="lg:max-w-[536px] w-full">
+                            <div class="flex flex-shrink items-center justify-center">
+
+
+                                <div class="flex flex-col">
+                                    <img src="Final Photos/Specific and Industrial/combined.jpg" alt="hero" />
+                                    <h6 class="text-center">Spiral staircase Steel chimneys with identical
+                                        and variable diameters</h6>
+                                </div>
+                                <!-- <div class="flex flex-col w-1/2">
+                                    <img src="Final Photos/Specific and Industrial/Home_Steel-b.bmp.png" alt="hero" />
+                                    <h6 class="text-center"></h6>
+                                </div> -->
+                            </div>
+                        </div>
+                        <div class="lg:max-w-[540px] w-full">
+                            <!-- <a href="category.html"
+                                class="inline-flex text-purple-dark bg-purple/[0.08] font-medium text-sm py-1 px-3 rounded-full mb-4">Lifestyle</a> -->
+                            <h1 class="font-bold text-custom-4 xl:text-heading-4 text-dark mb-4">
+                                <a href="blog-single.html">
+                                    Structural design of specific and industrial structures
+                            </h1>
+                            <div class="space-y-4">
+                                <p class="max-w-[524px]">
+                                    The focus of structural design by RevoMann GmbH is on structures, where
+                                    the challenges arise due to complexity of the corresponding analytical and
+                                    numerical theories and specificness of the structure itself.
+                                    These, more commonly, include combined form of shell, plate and beam
+                                    structures.
+                                </p>
+                                <p>
+                                    In this regard, application of enhanced methods, such as finite element
+                                    method, should be carried out carefully. This is only possible by under-
+                                    standing different aspects of both modelling and structural engineering.
+                                    Our main focus in design of industrial and specific structures are:
+                                    different types of containers, industrial chimneys, platforms, pressure vessels,
+                                    silos, spiral staircase, tanks as well as different types of foundations.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- fire -->
+        <section>
+            <div class="mx-auto max-w-[1170px] px-4 sm:px-8 xl:px-0 relative z-1">
+                <div class="flex flex-wrap gap-x-7.5 gap-y-9">
+                    <div
+                        class="max-w-[1170px] w-full flex flex-col lg:flex-row lg:items-center gap-7.5 lg:gap-11 bg-white shadow-1 rounded-xl p-4 lg:p-2.5">
+                        <div class="lg:max-w-[540px] w-full">
+                            <!-- <a href="category.html"
+                                class="inline-flex text-purple-dark bg-purple/[0.08] font-medium text-sm py-1 px-3 rounded-full mb-4">Lifestyle</a> -->
+                            <h1 class="font-bold text-custom-4 xl:text-heading-4 text-dark mb-4">
+                                <a href="blog-single.html">
+                                    Fire safety and fire design.
+                            </h1>
+                            <div class="space-y-4">
+                                <p class="max-w-[524px]">
+                                    Successful fire safety design requires an understanding of a wide range of issues
+                                    and components, and the interactions between them such as, fire source, smoke
+                                    movement, heat transfer to the building structure, detection, human behavior and
+                                    toxicity.
+                                </p>
+                                <p>
+                                    We mainly focus on structural fire design of structures; from thermal analysis to
+                                    evaluate structural performance using different design methods. These normally
+                                    include cases that are specific: either not covered by codes or the results via
+                                    simplified methods are not, economically, profitable.
+                                    We also coordinate and collaborate in fire safety and design projects as well as
+                                    material tests at elevated temperatures in collaboration with our partners from
+                                    practice and academia in the following subjects:
+                                <ul>
+                                    <li>- Tests for materials exposed to elevated temperatures;</li>
+                                    <li>- Tests for members exposed to elevated temperatures;</li>
+                                    <li>- Passive and active fire design;</li>
+                                    <li>- Fire and smoke development simulation.</li>
+                                </ul>
+                                </p>
+                            </div>
+                        </div>
+                        <div class="lg:max-w-[536px] w-full">
+
+                            <div class="flex flex-col">
+                                <img class="w-full" src="Final Photos/Fire-Design/Kreissttze-Heiá-b.png" alt="hero" />
+                                <h6 class="text-center">Nonlinear analysis of a hollow-circular column exposed
+                                    to fire</h6>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- automation -->
+        <section>
+            <div class="mx-auto max-w-[1170px] px-4 sm:px-8 xl:px-0 relative z-1">
+                <div class="flex flex-wrap gap-x-7.5 gap-y-9">
+                    <div
+                        class="max-w-[1170px] w-full flex flex-col lg:flex-row lg:items-center gap-7.5 lg:gap-11 bg-white shadow-1 rounded-xl p-4 lg:p-2.5">
+                        <div class="lg:max-w-[536px] w-full">
+                            <div class="flex flex-col">
+                                <img class="w-full"
+                                    src="Final Photos/Automation_Civil/Home_Automation-Structures-final.png"
+                                    alt="hero" />
+                                <h6 class="text-center">Automation of load transfer from 3D-model to 2D-model for design
+                                    purposes.</h6>
+                            </div>
+                        </div>
+                        <div class="lg:max-w-[540px] w-full">
+                            <!-- <a href="category.html"
+                                class="inline-flex text-purple-dark bg-purple/[0.08] font-medium text-sm py-1 px-3 rounded-full mb-4">Lifestyle</a> -->
+                            <h1 class="font-bold text-custom-4 xl:text-heading-4 text-dark mb-4">
+                                <a href="blog-single.html">
+                                    Automation and IT solutions for civil engineering.
+                            </h1>
+                            <div class="space-y-4">
+                                <p class="max-w-[524px]">
+                                    We provide solutions based on the needs of our clients in the practice. As
+                                    an example, the main aim to automate structural calculations is to pro-
+                                    vide simplified user interfaces for every day use of design and check/con-
+                                    trol engineers.
+                                </p>
+                                <p class="max-w-[524px]">
+                                    Further, automation of work flows as well as other related IT solutions
+                                    for companies with main focus on architectural and structural design as
+                                    well as material production or verifications are main scope of our work.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- specific solutions -->
+        <section>
+            <div class="mx-auto max-w-[1170px] px-4 sm:px-8 xl:px-0 relative z-1">
+                <div class="flex flex-wrap gap-x-7.5 gap-y-9">
+                    <div
+                        class="max-w-[1170px] w-full flex flex-col lg:flex-row lg:items-center gap-7.5 lg:gap-11 bg-white shadow-1 rounded-xl p-4 lg:p-2.5">
+                        <div class="lg:max-w-[540px] w-full">
+                            <!-- <a href="category.html"
+                                class="inline-flex text-purple-dark bg-purple/[0.08] font-medium text-sm py-1 px-3 rounded-full mb-4">Lifestyle</a> -->
+                            <h1 class="font-bold text-custom-4 xl:text-heading-4 text-dark mb-4">
+                                <a href="">
+                                    Specific topics in structural engineering.
+                            </h1>
+                            <div class="space-y-4">
+                                <p class="max-w-[524px]">
+                                    There are still number of specific topics that irrespective of use of numerical
+                                    methods, challenge engineers in a high level. Some of related topics that have been
+                                    the focus of RevoMann GmbH are:
+                                </p>
+                                <ul>
+                                    <li> - Nonlinear crack development of concrete;
+                                    </li>
+                                    <li>- Nonlinear analysis of reinforced concrete foundations with piles or anchors;
+                                    </li>
+                                    <li>- Nonlinear analysis of reinforced concrete structures at elevated temperatures
+                                        above 200°C;</li>
+                                    <li>- Eigenfrequency analysis and response of structures;
+                                    </li>
+                                    <li>- Seismic analysis of asymmetric reinforced concrete structures using 3D-models;
+                                    </li>
+                                    <li>- Seismic analysis of steel structures using 3D-models;
+                                    </li>
+                                    <li>- Buckling analysis of plate and shell structures using FE;
+                                    </li>
+                                    <li>- Buckling analysis of steel cross-sections at elevated temperatures; </li>
+                                    <li>- Connection design;</li>
+                                    <li>- ...</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="lg:max-w-[536px] w-full">
+                            <div class="flex flex-col">
+                                <img class="w-full" src="Final Photos/Specific topics/F7-N1.png" alt="hero" />
+                                <h6 class="text-center">Reinforced concrete foundation with 6 piles.</h6>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- structural -->
+        <section>
+            <div class="mx-auto max-w-[1170px] px-4 sm:px-8 xl:px-0 relative z-1">
+                <div class="flex flex-wrap gap-x-7.5 gap-y-9">
+                    <div
+                        class="max-w-[1170px] w-full flex flex-col lg:flex-row lg:items-center gap-7.5 lg:gap-11 bg-white shadow-1 rounded-xl p-4 lg:p-2.5">
+                        <div class="lg:max-w-[536px] w-full">
+
+                            <div class="lg:max-w-[536px] w-full">
+                                <div class="flex flex-col">
+                                    <img class="w-full" src="Final Photos/Research/Home_Research-E.png" alt="hero" />
+                                    <h6 class="text-center">From left to right: standing pressure vessel, blower
+                                        structure and section of tunnel under fire</h6>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="lg:max-w-[540px] w-full">
+                            <h1 class="font-bold text-custom-4 xl:text-heading-4 text-dark mb-4">
+                                <a href="">
+                                    Research.
+                            </h1>
+                            <div class="space-y-4">
+                                <p class="max-w-[524px]">
+                                    We conduct, collaborate and coordinate research projects with our partners
+                                    from practice and academia.
+                                    These cover;
+                                    - Structural and behavioral performance of structure, member, or interac-
+                                    tion between two or multiple structures;
+                                    - Investigation and comparison on behavior of industrial structures such as
+                                    chimneys, cooling towers, silos, standing pressure vessels and underground
+                                    tanks;
+                                    - Fire design: from material and member fire tests to numerical investiga-
+                                    tion and implementation into practice.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Tailord -->
+        <section>
+            <div class="mx-auto max-w-[1170px] px-4 sm:px-8 xl:px-0 relative z-1">
+                <div class="flex flex-wrap gap-x-7.5 gap-y-9">
+                    <div
+                        class="max-w-[1170px] w-full flex flex-col lg:flex-row lg:items-center gap-7.5 lg:gap-11 bg-white shadow-1 rounded-xl p-4 lg:p-2.5">
+                        <div class="lg:max-w-[540px] w-full">
+                            <!-- <a href="category.html"
+                                class="inline-flex text-purple-dark bg-purple/[0.08] font-medium text-sm py-1 px-3 rounded-full mb-4">Lifestyle</a> -->
+                            <h1 class="font-bold text-custom-4 xl:text-heading-4 text-dark mb-4">
+                                <a href="blog-single.html">
+                                    Custom made, and tailored to your specific needs.
+                            </h1>
+                            <div class="space-y-4">
+                                <p class="max-w-[524px]">
+                                    On customers demand, we have the technical ability to develop customized automation
+                                    and various solutions for IT requirements of businesses and organizations .
+                                    This include development of new solutions and providing integration with already
+                                    existing services in the market .
+                                </p>
+                            </div>
+                        </div>
+                        <div class="lg:max-w-[536px] w-full">
+                            <div class="flex flex-col">
+                                <img class="w-full" src="Final Photos/CustomIT/script.png" alt="hero" />
+                                <h6 class="text-center">Custom Design script for CAD solutions in python </h6>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- contact form  -->
+        <section>
+            <div class="mx-auto max-w-[1170px] px-4 sm:px-8 xl:px-0 relative z-1">
+                <div class="bg-white shadow-1 rounded-[10px] py-9 px-4 sm:px-8 xl:px-10">
+                    <div class="flex flex-wrap items-left justify-between gap-10">
+                        <iframe class="w-full aspect-video float-left" src="https://docs.google.com/forms/d/e/1FAIpQLScKfPkYkx3qGikKrfLQyNsUGj2uBwVC8aprs3hYOuXAxtnFow/viewform?embedded=true"  frameborder="0" marginheight="0" marginwidth="0">Loading…</iframe>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+
+
+
+    </main>
+
+
+    <footer class="relative z-10 py-8 border-t border-gray-3">
+        <div class="max-w-[1170px] mx-auto px-4 sm:px-8 xl:px-0">
+            <div
+                class="flex flex-wrap items-center justify-center flex-col gap-4 lg:gap-0 lg:flex-row lg:justify-between">
+                <div>
+                    <p class="text-custom-sm">&copy; 2024 RevoMann. All rights reserved</p>
+                </div>
+                <div>
+                    <ul class="flex flex-wrap items-center gap-2.5">
+                        <li>
+                            <a href="privacy-policy.html"
+                                class="group leading-none flex text-custom-sm ease-in duration-200 hover:text-dark">
+                                <span
+                                    class="bg-gradient-to-r from-dark to-dark bg-[length:0px_1px] bg-left-bottom bg-no-repeat transition-[background-size] duration-500 hover:bg-[length:100%_3px] group-hover:bg-[length:100%_1px]">Privacy</span>
+                            </a>
+                        </li>
+                        <li>
+                            <span class="flex w-[3px] h-[3px] rounded-full bg-dark-2"></span>
+                        </li>
+                        <li>
+                            <a href="privacy-policy.html"
+                                class="group leading-none flex text-custom-sm ease-in duration-200 hover:text-dark">
+                                <span
+                                    class="bg-gradient-to-r from-dark to-dark bg-[length:0px_1px] bg-left-bottom bg-no-repeat transition-[background-size] duration-500 hover:bg-[length:100%_3px] group-hover:bg-[length:100%_1px]">Terms</span>
+                            </a>
+                        </li>
+                        <li>
+                            <span class="flex w-[3px] h-[3px] rounded-full bg-dark-2"></span>
+                        </li>
+                        <li>
+                            <a href="signup.html"
+                                class="group leading-none flex text-custom-sm ease-in duration-200 hover:text-dark">
+                                <span
+                                    class="bg-gradient-to-r from-dark to-dark bg-[length:0px_1px] bg-left-bottom bg-no-repeat transition-[background-size] duration-500 hover:bg-[length:100%_3px] group-hover:bg-[length:100%_1px]">Contact</span>
+                            </a>
+                        </li>
+                        <li>
+                            <span class="flex w-[3px] h-[3px] rounded-full bg-dark-2"></span>
+                        </li>
+                        <li>
+                            <a href="signup.html"
+                                class="group leading-none flex text-custom-sm ease-in duration-200 hover:text-dark">
+                                <span
+                                    class="bg-gradient-to-r from-dark to-dark bg-[length:0px_1px] bg-left-bottom bg-no-repeat transition-[background-size] duration-500 hover:bg-[length:100%_3px] group-hover:bg-[length:100%_1px]">Contribute</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                <div>
+                    <div class="flex items-center gap-3">
+                        <p class="font-medium text-custom-sm text-dark">Follow Us:</p>
+
+                        <div class="flex items-center gap-1.5">
+                            <a id="facebookFooterBtn" aria-label="facebook social link" href="index.html#"
+                                class="flex items-center justify-center w-7.5 h-7.5 rounded-full hover:bg-gray-2 lg:transition-all lg:ease-linear lg:duration-300 hover:text-dark">
+                                <svg class="fill-current" width="19" height="18" viewBox="0 0 19 18" fill="none"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <path
+                                        d="M10.4 8.58585V6.07664C10.4 5.10529 11.2059 4.31785 12.2 4.31785H14V1.67966L11.5565 1.50912C9.47255 1.36368 7.7 2.97636 7.7 5.01777V8.58585H5V11.224H7.7V16.5H10.4V11.224H13.1L14 8.58585H10.4Z"
+                                        fill />
+                                </svg>
+                            </a>
+                            <a id="twitterFooterBtn" aria-label="twitter social link" href="index.html#"
+                                class="flex items-center justify-center w-7.5 h-7.5 rounded-full hover:bg-gray-2 lg:transition-all lg:ease-linear lg:duration-300 hover:text-dark">
+                                <svg class="fill-current" width="19" height="18" viewBox="0 0 19 18" fill="none"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <g clip-path="url(#clip0_739_364)">
+                                        <path
+                                            d="M16.2781 4.30313L17.3469 2.95313C17.6562 2.5875 17.7406 2.30625 17.7688 2.16562C16.925 2.67188 16.1375 2.84063 15.6312 2.84063H15.4344L15.3219 2.72813C14.6469 2.1375 13.8031 1.82812 12.9031 1.82812C10.9344 1.82812 9.3875 3.45938 9.3875 5.34375C9.3875 5.45625 9.3875 5.625 9.41563 5.7375L9.5 6.3L8.90938 6.27188C5.30937 6.15938 2.35625 3.06563 1.87813 2.53125C1.09063 3.9375 1.54063 5.2875 2.01875 6.13125L2.975 7.70625L1.45625 6.8625C1.48438 8.04375 1.93437 8.97188 2.80625 9.64688L3.56562 10.2094L2.80625 10.5188C3.28437 11.9531 4.35313 12.5438 5.14062 12.7688L6.18125 13.05L5.19688 13.725C3.62188 14.85 1.65312 14.7656 0.78125 14.6813C2.55313 15.9188 4.6625 16.2 6.125 16.2C7.22188 16.2 8.0375 16.0875 8.23438 16.0031C16.1094 14.1469 16.475 7.11563 16.475 5.70938V5.5125L16.6438 5.4C17.6 4.5 17.9937 4.02188 18.2188 3.74063C18.1344 3.76875 18.0219 3.825 17.9094 3.85313L16.2781 4.30313Z"
+                                            fill />
+                                    </g>
+                                    <defs>
+                                        <clipPath id="clip0_739_364">
+                                            <rect width="18" height="18" fill="white" transform="translate(0.5)" />
+                                        </clipPath>
+                                    </defs>
+                                </svg>
+                            </a>
+                            <a id="linkedinFooterBtn" aria-label="linkedin social link" href="index.html#"
+                                class="flex items-center justify-center w-7.5 h-7.5 rounded-full hover:bg-gray-2 lg:transition-all lg:ease-linear lg:duration-300 hover:text-dark">
+                                <svg class="fill-current" width="19" height="18" viewBox="0 0 19 18" fill="none"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <path
+                                        d="M5.50004 3.50068C5.49976 4.11141 5.12924 4.661 4.56318 4.89028C3.99713 5.11957 3.34858 4.98277 2.92335 4.54439C2.49812 4.10601 2.38114 3.45359 2.62755 2.89478C2.87397 2.33597 3.43458 1.98236 4.04504 2.00068C4.85584 2.02502 5.5004 2.68951 5.50004 3.50068ZM5.54504 6.11068H2.54504V15.5007H5.54504V6.11068ZM10.2851 6.11068H7.30004V15.5007H10.2551V10.5732C10.2551 7.82816 13.8326 7.57316 13.8326 10.5732V15.5007H16.7951V9.55316C16.7951 4.92568 11.5001 5.09818 10.2551 7.37066L10.2851 6.11068Z"
+                                        fill />
+                                </svg>
+                            </a>
+                            <a id="pinterestFooterBtn" aria-label="pinterest social link" href="index.html#"
+                                class="flex items-center justify-center w-7.5 h-7.5 rounded-full hover:bg-gray-2 lg:transition-all lg:ease-linear lg:duration-300 hover:text-dark">
+                                <svg class="fill-current" width="19" height="18" viewBox="0 0 19 18" fill="none"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <path
+                                        d="M1.00623 9.02818C1.06248 11.6438 2.27186 14.2594 4.32497 15.8344C4.97185 16.3126 5.67497 16.5938 6.40622 16.9032C6.09685 14.9063 6.85622 12.9094 7.2781 10.9407C7.33435 10.7438 7.36247 10.5188 7.36247 10.2938C7.36247 9.98443 7.24997 9.67505 7.1656 9.36568C7.08122 8.85943 7.13747 8.32505 7.36247 7.84693C7.67185 7.20005 8.4031 6.6938 9.04997 6.94693C9.6406 7.17193 9.8656 7.95943 9.7531 8.57818C9.6406 9.22505 9.3031 9.78755 9.13435 10.4063C8.93747 11.0251 8.9656 11.7844 9.4156 12.2063C9.83747 12.6001 10.5125 12.6282 11.0468 12.4032C11.8343 12.0657 12.3406 11.2782 12.65 10.4907C13.2125 9.02818 13.1 7.17193 11.9468 6.10318C11.4687 5.62505 10.7937 5.31568 10.0625 5.20318C8.82497 5.0063 7.47497 5.37193 6.6031 6.27193C5.73122 7.17193 5.33747 8.55005 5.7031 9.7313C5.8156 10.1251 6.0406 10.5188 6.12497 10.9126C6.20935 11.3063 6.18122 11.8126 5.89997 12.0938C5.87185 12.1219 5.84372 12.1501 5.78747 12.1782C5.73122 12.2063 5.64685 12.1501 5.5906 12.1219C5.05622 11.7844 4.63435 11.2501 4.38122 10.6876C3.59372 8.97193 3.98747 6.83443 5.22497 5.42818C6.46247 4.02193 8.45935 3.34693 10.3156 3.60005C12.0593 3.82505 13.775 4.86568 14.5062 6.4688C14.9562 7.42505 15.0406 8.52193 14.8718 9.56255C14.7031 10.6313 14.2812 11.6438 13.5781 12.4594C12.875 13.2751 11.8625 13.8376 10.7937 13.8938C9.92185 13.9501 8.99372 13.6407 8.54372 12.9094C8.26247 14.4282 7.7281 15.9188 6.9406 17.2407C6.91247 17.2969 8.7406 17.6907 8.90935 17.6907C10.9906 17.8594 13.2125 17.0438 14.8437 15.7501C19.3437 12.1782 18.8656 5.3438 14.4218 1.96881C12.1156 0.196933 9.38747 -0.140567 6.68747 0.815684C5.87185 1.09693 5.11247 1.57506 4.40935 2.08131C3.28436 2.92505 2.38436 4.02193 1.79373 5.28755C1.20311 6.44068 0.978106 7.73443 1.00623 9.02818Z"
+                                        fill />
+                                </svg>
+                            </a>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+
+
+    <button
+        class="hidden items-center justify-center w-10 h-10 rounded-[4px] shadow-solid-5 bg-dark hover:opacity-95 fixed bottom-8 right-8 z-999"
+        @click="window.scrollTo({top: 0, behavior: 'smooth'})"
+        @scroll.window="scrollTop = (window.pageYOffset > 50) ? true : false" :class="{ '!flex' : scrollTop }">
+        <svg class="fill-white w-5 h-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+            <path
+                d="M233.4 105.4c12.5-12.5 32.8-12.5 45.3 0l192 192c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L256 173.3 86.6 342.6c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3l192-192z" />
+        </svg>
+    </button>
+
+    <script defer src="js/bundle.js">
+    </script>
+    <script defer src="js/jquery-3.7.1.slim.min.js"></script>
+</body>
+
+</html>
